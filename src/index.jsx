@@ -1,4 +1,5 @@
 import React, { StrictMode } from "react";
+import 'typeface-open-sans'
 import { createRoot } from "react-dom/client";
 import "./index.less";
 import Aviasales from "./Components/Aviasales/Aviasales.jsx";
