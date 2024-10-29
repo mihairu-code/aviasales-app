@@ -1,9 +1,14 @@
 import './Aviasales.less'
+import Logo from "../Logo/Logo.jsx";
+import MainAviasales from "../MainAviasales/MainAviasales.jsx";
 
-export const Aviasales = () => {
+const Aviasales = () => {
     return (
-        <main className="aviasales">
-
-        </main>
+        <>
+            <Logo />
+            <MainAviasales />
+        </>
     )
 }
+
+export default Aviasales
