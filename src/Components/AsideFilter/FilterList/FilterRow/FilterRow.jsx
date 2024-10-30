@@ -1,9 +1,12 @@
 import './FilterRow.less'
 
-const FilterRow = ({name}) => {
+const FilterRow = ({name, id}) => {
 
     return (
-        <li className="filter-row" >{name}</li>
+        <li className="filter-row" >
+            <input className="filter-checkbox" id={id} type="checkbox"/>
+            <label htmlFor={id}>{name}</label>
+        </li>
     )
 }
 

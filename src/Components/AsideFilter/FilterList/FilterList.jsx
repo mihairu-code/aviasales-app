@@ -13,7 +13,7 @@ const FilterList = () => {
     return (
         <ul className="filter-list">
             {filters.map((filter) => (
-                <FilterRow key={filter.id} name={filter.name} />
+                <FilterRow key={filter.id} id={filter.id} name={filter.name} />
             ))}
         </ul>
     )
