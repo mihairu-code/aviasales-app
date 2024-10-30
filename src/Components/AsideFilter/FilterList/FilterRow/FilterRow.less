@@ -1,49 +1,87 @@
 .filter-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  column-gap: 10px;
-  padding: 0 10px;
-  margin: 0;
-  margin-left: -20px;
-  width: calc(100% + 20px);
+  align-self: center;
+  padding: 0 20px;
+  width: 100%;
   height: 40px;
   font-size: 13px;
   line-height: 20px;
   text-align: left;
   background-color: inherit;
   color: rgba(74, 74, 74, 1);
-  align-items: center;
-  transition: background-color;
-  overflow: visible;
+  transition: background-color 300ms ease-out;
+  cursor: pointer;
 
   &:hover {
     background-color: #F1FCFF;
+
+    &:first-child {
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .filter-checkbox::after {
+      border-color: #2196F3;
+    }
+  }
+
+  &:focus,
+  &:active {
+    background-color: #F1FCFF;
+  }
+
+  .filter-label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
   }
 
-  & .filter-checkbox {
+  .filter-checkbox {
     position: relative;
-    visibility: hidden;
-    margin: 0;
+    appearance: none;
+    margin: 0 10px 0 0;
     width: 20px;
     height: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
 
     & + label {
       cursor: pointer;
     }
 
     &::after {
-      box-sizing: border-box;
       content: '';
-      cursor: pointer;
+      box-sizing: border-box;
       display: inline-block;
-      visibility: visible;
       border: 1px solid #9ABBCE;
       border-radius: 2px;
       width: 20px;
       height: 20px;
     }
+
+    &:hover::after {
+      border-color: #2196F3;
+    }
+
+    &:checked {
+      background-color: inherit;
+      background-image: url('data:image/svg+xml,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.28571 8L0 4.16123L1.20857 3.0787L4.28571 5.82726L10.7914 0L12 1.09021L4.28571 8Z" fill="%232196F3"/></svg>');
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &::after {
+        border: 1px solid #2196F3;
+      }
+    }
   }
 }
 
+.checked-bg {
+  background-color: #F1FCFF;
+}
