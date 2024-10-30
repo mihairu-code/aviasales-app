@@ -1,0 +1,36 @@
+.sort-button {
+  padding: 0;
+  margin: 0;
+  flex-basis: 168px;
+  min-width: 138px;
+  height: 50px;
+  border: none;
+  color: #4A4A4A;
+  background-color: inherit;
+  transition: background-color 0.1s ease-in-out;
+
+  flex-shrink: 1;
+  flex-grow: 1;
+
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-transform: uppercase;
+
+
+  &:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  &:hover {
+    background-color: #2196F3;
+    color: #FFFFFF;
+  }
+}
