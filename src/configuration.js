@@ -34,8 +34,10 @@ async function getTickets()  {
     }
 }
 const TicketsArray = await getTickets();
+console.log(TicketsArray);
 
 export default TicketsArray
+
 
 
 

@@ -6,11 +6,17 @@
   background-color: green;
   height: 39px;
   column-gap: 20px;
+  transition: all 0.1s ease;
 
   & span {
     width: 141px;
     height: 100%;
     background-color: darkgreen;
+    transition: all 0.1s ease;
+
+    &:hover {
+      transform: scale(1.015);
+    }
   }
 
   &:first-child {
