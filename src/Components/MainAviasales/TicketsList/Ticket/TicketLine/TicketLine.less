@@ -8,11 +8,17 @@
   column-gap: 20px;
   transition: all 0.1s ease;
 
+  &:not(:first-child) {
+
+  }
+
   & span {
     width: 141px;
     height: 100%;
     background-color: darkgreen;
     transition: all 0.1s ease;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
       transform: scale(1.015);

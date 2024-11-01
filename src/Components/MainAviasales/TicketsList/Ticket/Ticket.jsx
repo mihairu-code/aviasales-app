@@ -4,7 +4,7 @@ import TicketLine from "./TicketLine/TicketLine.jsx";
 const Ticket = () => {
     return (
         <li className="ticket">
-            <TicketLine />
+            <TicketLine  />
             <TicketLine />
             <TicketLine />
         </li>

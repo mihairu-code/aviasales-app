@@ -33,10 +33,10 @@ async function getTickets()  {
         return null;
     }
 }
-const TicketsArray = await getTickets();
-console.log(TicketsArray);
+const ticketsArray = await getTickets();
 
-export default TicketsArray
+
+export default ticketsArray
 
 
 

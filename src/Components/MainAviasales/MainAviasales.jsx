@@ -3,8 +3,8 @@ import NavSort from "./NavSort/NavSort.jsx";
 import TicketsList from "./TicketsList/TicketsList.jsx";
 import ShowMoreButton from "./ShowMoreButton/ShowMoreButton.jsx";
 
-const MainAviasales = () => {
 
+const MainAviasales = () => {
 
     return (
         <main className="main-avias">
