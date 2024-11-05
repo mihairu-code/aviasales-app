@@ -5,6 +5,7 @@ const aviaSlices = createSlice({
     name: "avia",
     initialState: {
         tickets: ticketsArray,     // список билетов
+        visibledTickets: 5,
         filters: [],     // выбранные фильтры пересадок
         sort: "cheapest" // сортировка (например, по умолчанию "cheapest" — самый дешевый)
     },
@@ -12,6 +13,9 @@ const aviaSlices = createSlice({
         setTickets(state, action) {
             console.log(state, action);
             state.tickets = action.payload;
+        },
+        setVisibledTickets(state, action) {
+            state.visibledTickets = action.payload;
         },
         setFilter(state, action) {
             const filter = action.payload;
@@ -29,5 +33,5 @@ const aviaSlices = createSlice({
     }
 });
 
-export const { setTickets, setFilter, setSort } = aviaSlices.actions;
+export const { setTickets, setFilter, setSort , setVisibledTickets} = aviaSlices.actions;
 export default aviaSlices.reducer;

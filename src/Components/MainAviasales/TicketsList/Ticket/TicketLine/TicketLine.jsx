@@ -1,4 +1,5 @@
 import './TicketLine.less'
+import {convertMinutes, fly} from "../../../../../utility.js";
 import {useSelector} from "react-redux";
 
 const TicketLine = ({ price, carrier, from, to }) => {
@@ -9,22 +10,6 @@ const TicketLine = ({ price, carrier, from, to }) => {
         3: "3 ПЕРЕСАДКИ",
         4: "4 ПЕРЕСАДКИ",
         5: "5 ПЕРЕСАДОК",
-    }
-
-    const convertMinutes = (minutes) => {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        return `${hours}ч ${remainingMinutes}м`;
-    };
-
-    const fly = (data, duration) => {
-        const date = new Date(data);
-        if (duration) {
-            date.setUTCMinutes(date.getUTCMinutes() + duration);
-        }
-        const hours = String(date.getUTCHours()).padStart(2, '0');
-        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}`;
     };
 
     return (
