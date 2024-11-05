@@ -1,24 +1,17 @@
 .ticket-line {
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 100%;
   border: none;
-  background-color: green;
   height: 39px;
   column-gap: 20px;
   transition: all 0.1s ease;
 
-  &:not(:first-child) {
-
-  }
-
   & span {
     width: 141px;
     height: 100%;
-    background-color: darkgreen;
     transition: all 0.1s ease;
-    display: flex;
-    flex-direction: column;
 
     &:hover {
       transform: scale(1.015);
@@ -29,10 +22,44 @@
     justify-content: space-between;
     transform: translateY(-10px);
 
-    &> span:nth-child(2) {
+    & > span:first-child {
+      display: inline-flex;
+      color: rgba(33, 150, 243, 1);
+      font-family: Open Sans, sans-serif;
+      font-size: 24px;
+      line-height: 24px;
+      align-items: flex-end;
+    }
+
+    & > span:nth-child(2) {
       display: none;
     }
   }
+
+  &:not(:first-child) {
+
+    .center,
+    .left,
+    .right {
+      display: flex;
+      flex-direction: column-reverse;
+      position: relative;
+      font-family: Open Sans, sans-serif;
+      font-size: 14px;
+      line-height: 21px;
+      text-align: left;
+      color: rgba(74, 74, 74, 1);
+
+      &:after {
+        position: absolute;
+        content: attr(data-info);
+        font-family: Open Sans, sans-serif;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0.5px;
+        color: #a0b0b9;
+        top: 0;
+      }
+    }
+  }
 }
-
-

@@ -1,6 +1,8 @@
 import React, { StrictMode } from "react";
 import 'typeface-open-sans'
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import store from "./store";
 import "./index.less";
 import Aviasales from "./Components/Aviasales/Aviasales.jsx";
 
@@ -8,7 +10,9 @@ const rootElement = document.querySelector(".root");
 const root = createRoot(rootElement);
 
 root.render(
-  <StrictMode>
-    <Aviasales />
-  </StrictMode>,
+    <Provider store={store}>
+        <StrictMode>
+            <Aviasales />
+        </StrictMode>
+    </Provider>
 );
