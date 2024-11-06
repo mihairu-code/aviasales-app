@@ -19,13 +19,24 @@ const aviaSlices = createSlice({
         },
         setFilter(state, action) {
             const filter = action.payload;
+            // Если фильтр уже есть, удаляем его
             if (state.filters.includes(filter)) {
-                // если фильтр уже выбран, убираем его
                 state.filters = state.filters.filter(f => f !== filter);
             } else {
-                // иначе добавляем фильтр
                 state.filters.push(filter);
             }
+        },
+        setAllFilters(state) {
+            if (state.allFilters) {
+                state.filters = [];
+            } else {
+                state.filters = [0, 1, 2, 3]; // Например, все возможные фильтры
+            }
+            state.allFilters = !state.allFilters;
+        },
+        clearFilters(state) {
+            state.filters = [];
+            state.allFilters = false;
         },
         setSort(state, action) {
             state.sort = action.payload;
@@ -33,5 +44,12 @@ const aviaSlices = createSlice({
     }
 });
 
-export const { setTickets, setFilter, setSort , setVisibledTickets} = aviaSlices.actions;
+export const {
+    setTickets,
+    setFilter,
+    setSort ,
+    setVisibledTickets,
+    clearFilters,
+    setAllFilters
+} = aviaSlices.actions;
 export default aviaSlices.reducer;
