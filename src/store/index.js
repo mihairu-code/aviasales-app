@@ -1,10 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import aviaReducer from "./aviaSlices";
+import { configureStore } from '@reduxjs/toolkit'
+
+import aviaReducer from './aviaSlices'
 
 const store = configureStore({
-    reducer: {
-        avia: aviaReducer
-    }
-});
+  reducer: {
+    avia: aviaReducer,
+  },
+})
 
-export default store;
+export default store

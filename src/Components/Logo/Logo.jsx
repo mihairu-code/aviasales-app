@@ -1,9 +1,7 @@
-import "./Logo.less"
+import './Logo.less'
 
 const Logo = () => {
-    return (
-        <section className="logo"></section>
-    )
+  return <section className="logo"></section>
 }
 
-export default Logo;
+export default Logo

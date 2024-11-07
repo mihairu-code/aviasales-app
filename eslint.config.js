@@ -1,6 +1,6 @@
-import reactPlugin from 'eslint-plugin-react';
-import prettierPlugin from 'eslint-plugin-prettier';
-import importPlugin from 'eslint-plugin-import';
+import reactPlugin from 'eslint-plugin-react'
+import prettierPlugin from 'eslint-plugin-prettier'
+import importPlugin from 'eslint-plugin-import'
 
 export default [
   {
@@ -23,19 +23,33 @@ export default [
       import: importPlugin,
     },
     rules: {
-      'prettier/prettier': ['error', { semi: false }],
+      'prettier/prettier': [
+        'error',
+        {
+          semi: false,
+          singleQuote: true,
+          trailingComma: 'es5',
+          endOfLine: 'lf',
+        },
+      ],
       quotes: ['error', 'single'],
       semi: ['error', 'never'],
-      indent: ['error', 2],
       'linebreak-style': [0, 'unix'],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 0,
-      'import/no-unresolved': [2, { caseSensitive: false }],
+      'import/no-unresolved': 'off',
       'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
       'import/order': [
         2,
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
           'newlines-between': 'always',
         },
       ],
@@ -52,4 +66,4 @@ export default [
       },
     },
   },
-];
+]
