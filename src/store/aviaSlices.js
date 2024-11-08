@@ -76,6 +76,8 @@ const aviaSlices = createSlice({
     tickets: [],
     visibledTickets: 5,
     filters: [],
+    availableFilters: 4,
+    allFilters: false,
     sort: 'cheapest',
     loading: false,
     error: null,
@@ -87,21 +89,43 @@ const aviaSlices = createSlice({
     setVisibledTickets(state, action) {
       state.visibledTickets = action.payload
     },
-    setFilter(state, action) {
-      const filter = action.payload
-      if (state.filters.includes(filter)) {
-        state.filters = state.filters.filter((f) => f !== filter)
+    setAllFilters(state) {
+      const isAllActive = !state.allFilters
+      state.allFilters = isAllActive
+
+      if (isAllActive) {
+        state.filters = [0, 1, 2, 3]
       } else {
-        state.filters.push(filter)
+        state.filters = []
       }
     },
-    setAllFilters(state) {
-      if (state.allFilters) {
-        state.filters = []
+    setFilter(state, action) {
+      const filterId = action.payload
+
+      if (filterId === 'all') {
+        // Логика для кнопки "Все"
+        const isAllActive = !state.allFilters
+        state.allFilters = isAllActive
+
+        if (isAllActive) {
+          // Если "Все" активировано, устанавливаем все фильтры
+          state.filters = [0, 1, 2, 3]
+        } else {
+          // Если "Все" деактивировано, сбрасываем все фильтры
+          state.filters = []
+        }
       } else {
-        state.filters = [0, 1, 2, 3]
+        // Логика для других фильтров
+        if (state.filters.includes(filterId)) {
+          // Если фильтр уже активен, отключаем его
+          state.filters = state.filters.filter((id) => id !== filterId)
+        } else {
+          // Если фильтр не активен, активируем его
+          state.filters.push(filterId)
+        }
+
+        state.allFilters = state.filters.length === 4
       }
-      state.allFilters = !state.allFilters
     },
     clearFilters(state) {
       state.filters = []

@@ -8,7 +8,8 @@ const FilterRow = ({ name, id }) => {
   const filters = useSelector((state) => state.avia.filters)
   const allFilters = useSelector((state) => state.avia.allFilters)
 
-  const handleChecked = () => {
+  const handleChecked = (event) => {
+    event.stopPropagation()
     if (name === 'Все') {
       dispatch(setAllFilters())
     } else {
