@@ -2,8 +2,7 @@ import './TicketsList.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-import { setVisibledTickets } from '../../../store/aviaSlices.js'
-import { fetchTickets } from '../../../store/aviaSlices.js'
+import { setVisibledTickets, fetchTickets } from '../../../store/aviaSlices.js'
 
 import Ticket from './Ticket/Ticket.jsx'
 import load from './loadwebm.webm'
@@ -42,6 +41,9 @@ const TicketsList = () => {
     return 0
   })
 
+  // Проверка, есть ли выбранные фильтры
+  const noSelectedFilters = filters.length === 0
+
   if (error) {
     return (
       <section className="tickets-section">
@@ -60,6 +62,13 @@ const TicketsList = () => {
     <section className="tickets-section">
       {loading ? (
         <video className="loading-animation" src={load} autoPlay loop muted />
+      ) : noSelectedFilters ? (
+        <div className="tickets-section__none-tickets none-tickets">
+          <p className="none-tickets__text">
+            По таким настройкам билетов не найдено.
+          </p>
+          <video className="just-pic" src={load} autoPlay loop muted />
+        </div>
       ) : (
         <ul className="tickets-list">
           {sortedTickets.slice(0, visibledTickets).map((ticket, index) => (
@@ -67,11 +76,13 @@ const TicketsList = () => {
           ))}
         </ul>
       )}
-      {visibledTickets < sortedTickets.length && (
-        <button className="show-more-button" onClick={showMoreTickets}>
-          Показать еще
-        </button>
-      )}
+      {!loading &&
+        !noSelectedFilters &&
+        sortedTickets.length > visibledTickets && (
+          <button className="show-more" onClick={showMoreTickets}>
+            Показать еще
+          </button>
+        )}
     </section>
   )
 }
