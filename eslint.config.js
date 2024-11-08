@@ -1,6 +1,7 @@
 import reactPlugin from 'eslint-plugin-react'
 import prettierPlugin from 'eslint-plugin-prettier'
 import importPlugin from 'eslint-plugin-import'
+import unicornPlugin from 'eslint-plugin-unicorn'
 
 export default [
   {
@@ -21,6 +22,7 @@ export default [
       react: reactPlugin,
       prettier: prettierPlugin,
       import: importPlugin,
+      unicorn: unicornPlugin,
     },
     rules: {
       'prettier/prettier': [
@@ -53,6 +55,8 @@ export default [
           'newlines-between': 'always',
         },
       ],
+      'no-inline-comments': 'error',
+      'no-warning-comments': 'warn',
     },
     settings: {
       react: {

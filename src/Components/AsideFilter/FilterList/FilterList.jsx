@@ -3,7 +3,7 @@ import FilterRow from './FilterRow/FilterRow.jsx'
 
 const FilterList = () => {
   const filters = [
-    { id: 'all', name: 'Все' }, // добавляем фильтр "Все"
+    { id: 'all', name: 'Все' },
     { id: 0, name: 'Без пересадок', stops: 0 },
     { id: 1, name: '1 пересадка', stops: 1 },
     { id: 2, name: '2 пересадки', stops: 2 },

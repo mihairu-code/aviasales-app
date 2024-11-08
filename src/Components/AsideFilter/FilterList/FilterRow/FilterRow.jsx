@@ -14,13 +14,11 @@ const FilterRow = ({ name, id }) => {
     if (name === 'Все') {
       dispatch(setAllFilters())
     } else {
-      // Обычный фильтр
       setChecked((prev) => !prev)
-      dispatch(setFilter(id)) // Отправка фильтра в Redux
+      dispatch(setFilter(id))
     }
   }
 
-  // Для чекбокса "Все" нужно синхронизировать состояние с Redux
   const isChecked = name === 'Все' ? allFilters : filters.includes(id)
 
   return (

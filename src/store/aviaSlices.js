@@ -73,24 +73,21 @@ export const fetchTickets = createAsyncThunk(
 const aviaSlices = createSlice({
   name: 'avia',
   initialState: {
-    tickets: [], // список билетов
+    tickets: [],
     visibledTickets: 5,
-    filters: [], // выбранные фильтры пересадок
+    filters: [],
     sort: 'cheapest',
     loading: false,
     error: null,
   },
   reducers: {
     setTickets(state, action) {
-      console.log(state, action)
       state.tickets = action.payload
     },
     setVisibledTickets(state, action) {
-      console.log(state, action)
       state.visibledTickets = action.payload
     },
     setFilter(state, action) {
-      console.log(state, action)
       const filter = action.payload
       if (state.filters.includes(filter)) {
         state.filters = state.filters.filter((f) => f !== filter)
@@ -111,7 +108,6 @@ const aviaSlices = createSlice({
       state.allFilters = false
     },
     setSort(state, action) {
-      console.log(state, action)
       state.sort = action.payload
     },
   },
@@ -130,6 +126,7 @@ const aviaSlices = createSlice({
       .addCase(fetchTickets.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
+        loadFromLocalStorage()
       })
   },
 })
