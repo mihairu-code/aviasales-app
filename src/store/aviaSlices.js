@@ -1,4 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+const loadFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('aviaState')
+    return serializedState ? JSON.parse(serializedState) : undefined
+  } catch (e) {
+    console.warn('Не удалось загрузить состояние из localStorage', e)
+    return undefined
+  }
+}
+
+const saveToLocalStorage = (state) => {
+  try {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('aviaState', serializedState)
+  } catch (e) {
+    console.error('Не удалось сохранить состояние в localStorage', e)
+  }
+}
+
 const baseURL = 'https://aviasales-test-api.kata.academy'
 
 async function getSearchId() {
@@ -105,6 +125,7 @@ const aviaSlices = createSlice({
         console.log('Билеты успешно получены:', action.payload)
         state.loading = false
         state.tickets = action.payload
+        saveToLocalStorage(state)
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.loading = false

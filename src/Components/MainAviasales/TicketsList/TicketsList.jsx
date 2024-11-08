@@ -16,8 +16,10 @@ const TicketsList = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchTickets())
-  }, [dispatch])
+    if (tickets.length === 0) {
+      dispatch(fetchTickets())
+    }
+  }, [dispatch, tickets.length])
 
   const showMoreTickets = () => {
     dispatch(setVisibledTickets(visibledTickets + 5))
