@@ -79,7 +79,7 @@ const TicketsList = () => {
       {!loading &&
         !noSelectedFilters &&
         sortedTickets.length > visibledTickets && (
-          <button className="show-more" onClick={showMoreTickets}>
+          <button className="show-more-button" onClick={showMoreTickets}>
             Показать еще
           </button>
         )}
