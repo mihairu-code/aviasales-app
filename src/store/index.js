@@ -4,13 +4,15 @@ import { saveState, loadState } from '../utility.js'
 
 import aviaReducer from './aviaSlices'
 
-const persistedState = loadState()
+localStorage.clear()
+
+// const persistedState = loadState()
 
 const store = configureStore({
   reducer: {
     avia: aviaReducer,
   },
-  preloadedState: persistedState,
+  // preloadedState: persistedState,
 })
 
 store.subscribe(() => {

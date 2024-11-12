@@ -1,24 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-const loadFromLocalStorage = () => {
-  try {
-    const serializedState = localStorage.getItem('aviaState')
-    return serializedState ? JSON.parse(serializedState) : undefined
-  } catch (e) {
-    console.warn('Не удалось загрузить состояние из localStorage', e)
-    return undefined
-  }
-}
-
-const saveToLocalStorage = (state) => {
-  try {
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('aviaState', serializedState)
-  } catch (e) {
-    console.error('Не удалось сохранить состояние в localStorage', e)
-  }
-}
-
 const baseURL = 'https://aviasales-test-api.kata.academy'
 
 async function getSearchId() {
@@ -43,23 +24,44 @@ export const fetchTickets = createAsyncThunk(
 
     let tickets = []
     let attempts = 0
-    const maxAttempts = 5
+    let failedAttempts = 0
+    const maxAttempts = 10
+    let stop = false
 
-    while (attempts < maxAttempts) {
+    while (!stop && attempts < maxAttempts) {
       try {
         const response = await fetch(`${baseURL}/tickets?searchId=${searchId}`)
+        if (!response.ok) {
+          throw new Error(
+            `Ошибка при получении билетов: ${response.statusText}`
+          )
+        }
+
         const data = await response.json()
 
         if (data.tickets) {
           tickets = [...tickets, ...data.tickets]
         }
-        if (data.stop) {
+
+        stop = data.stop
+
+        failedAttempts = 0
+      } catch (error) {
+        attempts++
+
+        failedAttempts++
+
+        if (failedAttempts >= 3) {
+          console.error(
+            `Ошибка при получении билетов: слишком много неудачных попыток подряд (${failedAttempts})`
+          )
+        } else {
+          console.log('Ошибка при получении билетов:', error.message)
+        }
+        if (failedAttempts >= 5) {
           break
         }
-      } catch (error) {
-        console.error('Ошибка при получении билетов:', error.message)
       }
-      attempts++
     }
 
     if (tickets.length === 0) {
@@ -75,10 +77,10 @@ const aviaSlices = createSlice({
   initialState: {
     tickets: [],
     visibledTickets: 5,
-    filters: [],
+    filters: [0, 1, 2, 3],
     availableFilters: 4,
-    allFilters: false,
-    sort: 'cheapest',
+    allFilters: true,
+    sort: 'Самый дешевый',
     loading: false,
     error: null,
   },
@@ -103,24 +105,18 @@ const aviaSlices = createSlice({
       const filterId = action.payload
 
       if (filterId === 'all') {
-        // Логика для кнопки "Все"
         const isAllActive = !state.allFilters
         state.allFilters = isAllActive
 
         if (isAllActive) {
-          // Если "Все" активировано, устанавливаем все фильтры
           state.filters = [0, 1, 2, 3]
         } else {
-          // Если "Все" деактивировано, сбрасываем все фильтры
           state.filters = []
         }
       } else {
-        // Логика для других фильтров
         if (state.filters.includes(filterId)) {
-          // Если фильтр уже активен, отключаем его
           state.filters = state.filters.filter((id) => id !== filterId)
         } else {
-          // Если фильтр не активен, активируем его
           state.filters.push(filterId)
         }
 
@@ -145,12 +141,10 @@ const aviaSlices = createSlice({
         console.log('Билеты успешно получены:', action.payload)
         state.loading = false
         state.tickets = action.payload
-        saveToLocalStorage(state)
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
-        loadFromLocalStorage()
       })
   },
 })
