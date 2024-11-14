@@ -3,7 +3,8 @@ import 'typeface-open-sans'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
-import store from './store'
+import store from '/store/store.js'
+
 import './index.less'
 import Aviasales from './Components/Aviasales/Aviasales.jsx'
 
