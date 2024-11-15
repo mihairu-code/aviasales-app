@@ -18,17 +18,14 @@ async function getSearchId() {
 
 export const fetchTickets = createAsyncThunk(
   'tickets/fetchTickets',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     const searchId = await getSearchId()
     if (!searchId) return rejectWithValue('Не удалось получить searchId')
 
     let tickets = []
-    let attempts = 0
     let failedAttempts = 0
-    const maxAttempts = 10
-    let stop = false
 
-    while (!stop && attempts < maxAttempts) {
+    const fetchBatch = async () => {
       try {
         const response = await fetch(`${baseURL}/tickets?searchId=${searchId}`)
         if (!response.ok) {
@@ -38,37 +35,38 @@ export const fetchTickets = createAsyncThunk(
         }
 
         const data = await response.json()
-
         if (data.tickets) {
           tickets = [...tickets, ...data.tickets]
+          dispatch(setTickets(tickets))
         }
 
-        stop = data.stop
+        if (data.stop) {
+          return tickets
+        }
 
         failedAttempts = 0
+        return fetchBatch()
       } catch (error) {
-        attempts++
-
         failedAttempts++
 
-        if (failedAttempts >= 3) {
+        if (failedAttempts >= 5) {
           console.error(
             `Ошибка при получении билетов: слишком много неудачных попыток подряд (${failedAttempts})`
           )
-        } else {
-          console.log('Ошибка при получении билетов:', error.message)
+          return tickets
         }
-        if (failedAttempts >= 5) {
-          break
-        }
+
+        return fetchBatch()
       }
     }
 
-    if (tickets.length === 0) {
+    const allTickets = await fetchBatch()
+
+    if (allTickets.length === 0) {
       return rejectWithValue('Не удалось получить билеты')
     }
 
-    return tickets
+    return allTickets
   }
 )
 
@@ -140,7 +138,6 @@ const aviaSlices = createSlice({
       .addCase(fetchTickets.fulfilled, (state, action) => {
         console.log('Билеты успешно получены:', action.payload)
         state.loading = false
-        state.tickets = action.payload
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.loading = false
