@@ -2,7 +2,12 @@ import './TicketsList.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useMemo } from 'react'
 
-import { setVisibledTickets, fetchTickets } from '../../../store/aviaSlices.js'
+import {
+  setVisibledTickets,
+  fetchTickets,
+  setAllFilters,
+  setFilter,
+} from '../../../store/aviaSlices.js'
 
 import Ticket from './Ticket/Ticket.jsx'
 import load from './loadwebm.webm'
@@ -13,6 +18,15 @@ const TicketsList = () => {
   const sort = useSelector((state) => state.avia.sort)
   const filters = useSelector((state) => state.avia.filters)
   const dispatch = useDispatch()
+
+  const handleChecked = (event) => {
+    event.stopPropagation()
+    if (name === 'Все') {
+      dispatch(setAllFilters())
+      return
+    }
+    dispatch(setFilter(id))
+  }
 
   // Начать загрузку билетов при монтировании компонента
   useEffect(() => {
@@ -50,43 +64,42 @@ const TicketsList = () => {
   const noSelectedFilters = filters.length === 0
   const noTicketsFound = !loading && sortedTickets.length === 0
 
-  if (error) {
+  if (noSelectedFilters) {
     return (
-      <section className="tickets-section">
-        <p>Произошла ошибка при загрузке билетов: {error}</p>
-        <button
-          className="reload-button"
-          onClick={() => dispatch(fetchTickets())}
-        >
-          Повторить загрузку
-        </button>
-      </section>
+      <div className="tickets-section__none-tickets none-tickets">
+        <p className="none-tickets__text">
+          По таким настройкам билетов не найдено.
+        </p>
+        <video className="just-pic" src={load} autoPlay loop muted />
+      </div>
     )
   }
 
   return (
     <section className="tickets-section">
-      {loading && tickets.length === 0 ? (
+      {loading && (
         <video className="loading-animation" src={load} autoPlay loop muted />
-      ) : noTicketsFound ? (
-        <div className="tickets-section__none-tickets none-tickets">
-          <p className="none-tickets__text">
-            По таким настройкам билетов не найдено.
-          </p>
-          <video className="just-pic" src={load} autoPlay loop muted />
-        </div>
+      )}
+      {error ? (
+        <section className="tickets-section">
+          <p>Произошла ошибка при загрузке билетов: {error}</p>
+          <button
+            className="reload-button"
+            onClick={() => dispatch(fetchTickets())}
+          >
+            Повторить загрузку
+          </button>
+        </section>
       ) : (
         <>
-          <ul className="tickets-list">
+          <ul className={`tickets-list ${loading ? 'translateY' : ''}`}>
             {sortedTickets.slice(0, visibledTickets).map((ticket, index) => (
               <Ticket key={index} ticket={ticket} />
             ))}
           </ul>
-          {sortedTickets.length > visibledTickets && (
-            <button className="show-more-button" onClick={showMoreTickets}>
-              Показать еще
-            </button>
-          )}
+          <button className="show-more-button" onClick={showMoreTickets}>
+            Показать еще
+          </button>
         </>
       )}
     </section>

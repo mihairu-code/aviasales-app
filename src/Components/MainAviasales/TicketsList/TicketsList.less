@@ -9,17 +9,13 @@
     box-sizing: border-box;
     justify-content: center;
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     padding:16px 14px;
     width: 100%;
     height: 100px;
     background-color: #fff;
     border-radius: 10px;
     border: #DFE5EC solid 1px;
-    @media (max-width: 768px){
-
-    }
-
 
     .none-tickets__text {
       margin: 0;
@@ -48,6 +44,10 @@ ul {
   flex-direction: column;
   flex-wrap: nowrap;
   row-gap: 20px;
+}
+
+.translateY {
+  transform: translateY(-5rem)
 }
 
 @speed:0.5s;
@@ -85,9 +85,9 @@ ul {
 
 
 .loading-animation {
-  transform: translateX(100px);
-  max-width: 300px;
-  max-height: 200px;
+  transform: translate(11rem, -2.5rem);
+  max-width: 9rem;
+  max-height: 9rem;
 }
 
 .just-pic {
